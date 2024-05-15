@@ -15,12 +15,12 @@ class HomeRemoteSource {
 
   Future<Either<AppError, ApiResponseForList<PictureResponse>>> fetchData({
     String? search,
-    int page = 50,
+    int page = 20,
   }) async {
     try {
       final param = <String, dynamic>{
         'per_page': page,
-        'query': search ?? 'Cars',
+        'query': search == null || search.isEmpty ? 'Cars' : search,
       };
 
       final response = await _client.httpGet<dynamic>(

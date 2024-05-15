@@ -41,33 +41,35 @@ class _HomeScreenState extends State<HomeScreen> {
             BlocBuilder<HomeBloc, HomeState>(
               builder: (context, state) {
                 return Expanded(
-                    child: state.theStates == TheStates.error
-                        ? AppButton.blue(
-                            text: state.errorMessage ?? '',
-                            onTap: () {
-                              BlocProvider.of<HomeBloc>(context)
-                                  .add(FetchAllData());
-                            },
-                          )
-                        : state.theStates == TheStates.sucess
-                            ? GridView.builder(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
-                                itemCount: state.pictures?.length ?? 0,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 16,
-                                        mainAxisSpacing: 16,),
-                                itemBuilder: (context, index) => FeedCard(
-                                  picture: state.pictures?[index] ??
-                                      PictureResponse(),
-                                ),
-                              )
-                            : LoadingAnimationWidget.threeRotatingDots(
-                                color: AppColors.white,
-                                size: 40.r,
-                              ),);
+                  child: state.theStates == TheStates.error
+                      ? const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Text(
+                            'No Results foond',
+                            style:
+                                TextStyle(color: AppColors.white, fontSize: 22),
+                          ),
+                        )
+                      : state.theStates == TheStates.sucess
+                          ? GridView.builder(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              itemCount: state.pictures?.length ?? 0,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 16,
+                                mainAxisSpacing: 16,
+                              ),
+                              itemBuilder: (context, index) => FeedCard(
+                                picture:
+                                    state.pictures?[index] ?? PictureResponse(),
+                              ),
+                            )
+                          : LoadingAnimationWidget.threeRotatingDots(
+                              color: AppColors.white,
+                              size: 40.r,
+                            ),
+                );
               },
             ),
           ],
